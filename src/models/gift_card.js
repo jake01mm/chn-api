@@ -1,0 +1,59 @@
+'use strict';
+
+module.exports = (sequelize, DataTypes) => {
+  const GiftCard = sequelize.define('GiftCard', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    type_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'GiftCardTypes',
+        key: 'id'
+      }
+    },
+    country: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    min: {
+      type: DataTypes.DECIMAL(10, 2),
+      defaultValue: 0.00
+    },
+    max: {
+      type: DataTypes.DECIMAL(10, 2),
+      defaultValue: 0.00
+    },
+    nairarate: {
+      type: DataTypes.DECIMAL(15, 2),
+      defaultValue: 0.00
+    },
+    image_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'GiftCardImages',
+        key: 'id'
+      }
+    }
+  }, {
+    tableName: 'GiftCards',
+    underscored: true,
+    paranoid: true
+  });
+
+  GiftCard.associate = function(models) {
+    GiftCard.belongsTo(models.GiftCardType, {
+      foreignKey: 'type_id',
+      as: 'type'
+    });
+    GiftCard.belongsTo(models.GiftCardImage, {
+      foreignKey: 'image_id',
+      as: 'image'
+    });
+  };
+
+  return GiftCard;
+}; 
