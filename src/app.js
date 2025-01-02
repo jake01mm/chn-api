@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const db = require('./models');
 const logger = require('./utils/logger');
+const path = require('path');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./docs/swagger');
@@ -13,6 +14,7 @@ const userRoutes = require('./modules/user/user.route');
 const adminRoutes = require('./modules/admin/admin.route');
 const merchantRoutes = require('./modules/merchant/merchant.route');
 const verificationRoutes = require('./modules/verification/verification.route');
+const avatarRoutes = require('./modules/avatar/avatar.route');
 
 // 中间件
 const rateLimiter = require('./middlewares/rateLimiter');
@@ -48,11 +50,15 @@ try {
   logger.error('Failed to setup Swagger UI:', error);
 }
 
+// 静态文件服务
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // API 路由
 app.use('/user', rateLimiter, userRoutes); // 用户模块路由
 app.use('/admin', adminRoutes); // 管理员模块路由
 app.use('/merchant', merchantRoutes); // 商家模块路由
 app.use('/verifications', verificationRoutes); // 验证模块路由
+app.use('/avatar', avatarRoutes);  // 添加头像路由
 
 
 // 基础路由
