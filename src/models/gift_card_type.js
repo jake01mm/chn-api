@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     note: {
       type: DataTypes.TEXT
+    },
+    image_url: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     tableName: 'GiftCardTypes',

@@ -30,13 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     nairarate: {
       type: DataTypes.DECIMAL(15, 2),
       defaultValue: 0.00
-    },
-    image_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'GiftCardImages',
-        key: 'id'
-      }
     }
   }, {
     tableName: 'GiftCards',
@@ -48,10 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     GiftCard.belongsTo(models.GiftCardType, {
       foreignKey: 'type_id',
       as: 'type'
-    });
-    GiftCard.belongsTo(models.GiftCardImage, {
-      foreignKey: 'image_id',
-      as: 'image'
     });
   };
 
