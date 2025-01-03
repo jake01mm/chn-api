@@ -16,6 +16,10 @@ module.exports = {
       note: {
         type: Sequelize.TEXT
       },
+      image_url: {
+        type: Sequelize.STRING(255),
+        allowNull: true
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
@@ -25,8 +29,7 @@ module.exports = {
         allowNull: false
       },
       deleted_at: {
-        type: Sequelize.DATE,
-        allowNull: true
+        type: Sequelize.DATE
       }
     });
   },

@@ -15,8 +15,12 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      user_type: {
+        type: Sequelize.STRING(20),
         allowNull: false,
-        unique: true
+        comment: '用户类型：user/merchant/admin'
       },
       avatar_url: {
         type: Sequelize.STRING(255),
@@ -44,14 +48,13 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false
-      },
-      deleted_at: {  // 添加软删除字段
-        type: Sequelize.DATE,
-        allowNull: true
       }
     });
 
-    await queryInterface.addIndex('UserAvatars', ['user_id']);
+    // 添加联合唯一索引
+    await queryInterface.addIndex('UserAvatars', ['user_id', 'user_type'], {
+      unique: true
+    });
   },
 
   async down(queryInterface, Sequelize) {

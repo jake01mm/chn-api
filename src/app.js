@@ -15,6 +15,8 @@ const adminRoutes = require('./modules/admin/admin.route');
 const merchantRoutes = require('./modules/merchant/merchant.route');
 const verificationRoutes = require('./modules/verification/verification.route');
 const avatarRoutes = require('./modules/avatar/avatar.route');
+const giftCardRoutes = require('./modules/gift-card/gift-card.route');
+const sensitiveInfoRoutes = require('./modules/sensitive-info/sensitive-info.route');
 
 // 中间件
 const rateLimiter = require('./middlewares/rateLimiter');
@@ -59,6 +61,8 @@ app.use('/admin', adminRoutes); // 管理员模块路由
 app.use('/merchant', merchantRoutes); // 商家模块路由
 app.use('/verifications', verificationRoutes); // 验证模块路由
 app.use('/avatar', avatarRoutes);  // 添加头像路由
+app.use('/gift-cards', giftCardRoutes);
+app.use('/sensitive-info', sensitiveInfoRoutes);
 
 
 // 基础路由

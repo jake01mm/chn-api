@@ -1,0 +1,265 @@
+{
+  "info": {
+    "_postman_id": "your-collection-id",
+    "name": "Gift Card API",
+    "description": "礼品卡管理系统 API 测试集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "礼品卡类型管理",
+      "description": "管理员专用接口",
+      "item": [
+        {
+          "name": "创建礼品卡类型",
+          "description": "创建新的礼品卡类型，包含图片上传",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/types",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "types"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Amazon Gift Card",
+                  "type": "text",
+                  "description": "礼品卡类型名称"
+                },
+                {
+                  "key": "note",
+                  "value": "亚马逊礼品卡",
+                  "type": "text",
+                  "description": "类型描述"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": [],
+                  "description": "类型图片"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "更新礼品卡类型",
+          "description": "更新现有礼品卡类型信息，可选择更新图片",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/types/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "types", "1"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Amazon Card",
+                  "type": "text"
+                },
+                {
+                  "key": "note",
+                  "value": "更新后的描述",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": [],
+                  "description": "可选，不上传则保持原图"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "删除礼品卡类型",
+          "description": "删除礼品卡类型（需确保没有关联的价格信息）",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/types/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "types", "1"]
+            }
+          }
+        },
+        {
+          "name": "获取所有礼品卡类型",
+          "description": "获取所有可用的礼品卡类型列表",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/types",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "types"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "礼品卡价格管理",
+      "description": "礼品卡价格相关操作",
+      "item": [
+        {
+          "name": "创建礼品卡价格",
+          "description": "为指定类型创建新的价格信息",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/types/1/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "types", "1", "cards"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"country\": \"US\",\n    \"min\": 25.00,\n    \"max\": 100.00,\n    \"nairarate\": 1200.00\n}"
+            }
+          }
+        },
+        {
+          "name": "更新礼品卡价格",
+          "description": "更新现有价格信息（管理员和商家都可以）",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{merchantToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/cards/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "cards", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"country\": \"EUR\",\n    \"min\": 25.00,\n    \"max\": 100.00,\n    \"nairarate\": 1200.00\n}"
+            }
+          }
+        },
+        {
+          "name": "删除礼品卡价格",
+          "description": "删除指定的价格信息（仅管理员）",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/cards/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "cards", "1"]
+            }
+          }
+        },
+        {
+          "name": "获取礼品卡列表",
+          "description": "获取所有价格信息，支持类型和国家筛选",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/gift-cards/cards?type_id=1&country=US",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift-cards", "cards"],
+              "query": [
+                {
+                  "key": "type_id",
+                  "value": "1",
+                  "description": "可选，按类型筛选"
+                },
+                {
+                  "key": "country",
+                  "value": "US",
+                  "description": "可选，按国家筛选"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "your_admin_token_here",
+      "type": "string"
+    },
+    {
+      "key": "merchantToken",
+      "value": "your_merchant_token_here",
+      "type": "string"
+    }
+  ]
+} 

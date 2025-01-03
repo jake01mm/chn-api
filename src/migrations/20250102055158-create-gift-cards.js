@@ -32,13 +32,6 @@ module.exports = {
         type: Sequelize.DECIMAL(15, 2),
         defaultValue: 0.00
       },
-      image_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'GiftCardImages',
-          key: 'id'
-        }
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
@@ -48,10 +41,13 @@ module.exports = {
         allowNull: false
       },
       deleted_at: {
-        type: Sequelize.DATE,
-        allowNull: true
+        type: Sequelize.DATE
       }
     });
+
+    // 添加索引
+    await queryInterface.addIndex('GiftCards', ['type_id']);
+    await queryInterface.addIndex('GiftCards', ['country']);
   },
 
   down: async (queryInterface, Sequelize) => {

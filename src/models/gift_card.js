@@ -9,11 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     type_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'GiftCardTypes',
-        key: 'id'
-      }
+      allowNull: false
     },
     country: {
       type: DataTypes.STRING(50),
@@ -34,7 +30,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'GiftCards',
     underscored: true,
-    paranoid: true
+    paranoid: true,
+    indexes: [
+      {
+        fields: ['type_id']
+      },
+      {
+        fields: ['country']
+      }
+    ]
   });
 
   GiftCard.associate = function(models) {

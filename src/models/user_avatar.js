@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'UserAvatars',
     underscored: true,
-    paranoid: false,
+    timestamps: true,
     indexes: [
       {
         unique: true,
@@ -46,6 +46,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     ]
   });
+
+  UserAvatar.associate = function(models) {
+    UserAvatar.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user'
+    });
+  };
 
   return UserAvatar;
 }; 
